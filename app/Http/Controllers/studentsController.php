@@ -12,7 +12,7 @@ class studentsController extends Controller
         // Mengambil semua data dari model PegawaiModel
         $data = studentsModel::all();
         // Mengirimkan data ke view 'Pegawai.Index' dengan variabel 'data'
-        return view('pages.mahasiswa.mahasiswa')->with('data', $data);
+        return view('pages.students.students')->with('data', $data);
     }
 
     // Fungsi untuk membuat atau menyimpan data pegawai baru
@@ -21,18 +21,20 @@ class studentsController extends Controller
         // Membuat instance baru dari model PegawaiModel
         $data = new studentsModel();
         // Mengambil nilai dari input form dan mengisi kolom pada model
+        $data->NIM = $request->input('NIM');
         $data->name = $request->input('name');
-        $data->nim = $request->input('nim');
-        $data->prodi = $request->input('prodi');
+        $data->email = $request->input('email');
+        $data->phone = $request->input('phone');
+        $data->departement = $request->input('departement');
         // Menyimpan data ke dalam database
         $data->save();
         // Setelah menyimpan, redirect ke route yang menampilkan semua data pegawai
-        return redirect()->route('getalldatamahasiswa');
+        return redirect()->route('getAllDataStudents');
     }
 
     public function createForm()
     {
-        return view('pages.mahasiswa.create');
+        return view('pages.students.create');
     }
 
 
@@ -42,7 +44,7 @@ class studentsController extends Controller
         // Mengambil satu data pegawai berdasarkan ID
         $data = studentsModel::where('id', $id)->first();
         // Mengirimkan data ke view 'Pegawai.edit' untuk ditampilkan di form edit
-        return view('pages.mahasiswa.edit')->with('data', $data);
+        return view('pages.students.edit')->with('data', $data);
     }
 
     // Fungsi untuk mengupdate data pegawai berdasarkan ID
@@ -51,13 +53,15 @@ class studentsController extends Controller
         // Mengambil data pegawai berdasarkan ID
         $data = studentsModel::where('id', $id)->first();
         // Mengambil inputan baru dari form dan mengupdate data pada model
+        $data->NIM = $request->input('NIM');
         $data->name = $request->input('name');
-        $data->nim = $request->input('nim');
-        $data->prodi = $request->input('prodi');
+        $data->email = $request->input('email');
+        $data->phone = $request->input('phone');
+        $data->departement = $request->input('departement');
         // Menyimpan perubahan data ke dalam database
         $data->save();
         // Setelah data berhasil diupdate, redirect ke halaman yang menampilkan semua data pegawai
-        return redirect()->route('getalldatamahasiswa');
+        return redirect()->route('getAllDataStudents');
     }
 
     // Fungsi untuk menghapus data pegawai berdasarkan ID
@@ -68,7 +72,7 @@ class studentsController extends Controller
         // Menghapus data pegawai dari database
         $data->delete();
         // Setelah penghapusan, redirect ke halaman yang menampilkan semua data pegawai
-        return redirect()->route('getalldatamahasiswa');
+        return redirect()->route('getDataAllStudents');
     }
 
 }

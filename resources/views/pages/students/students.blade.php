@@ -13,18 +13,18 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <a href="{{ route('createDataAttendance') }}" class="btn btn-dark mb-3">
+                        <a href="{{ route('createDataStudents') }}" class="btn btn-dark mb-3">
                             <i class="fas fa-plus"></i> Add
                         </a>
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Tanggal</th>
-                                    <th>Waktu</th>
-                                    <th>Status</th>
-                                    <th>Mata kuliah</th>
-                                    <th>Nama mahasiswa</th>
+                                    <th>NIM</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>No Hp</th>
+                                    <th>Kampus</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -36,17 +36,17 @@
                                     @foreach ($data as $dt)
                                         <tr class="">
                                             <td>{{ $no++ }}</td>
-                                            <td>{{ $dt->date_attendance }}</td>
-                                            <td>{{ $dt->time_attendance }}</td>
-                                            <td>{{ $dt->status }}</td>
-                                            <td>{{ $dt->courses->course_name }}</td>
-                                            <td>{{ $dt->students->name }}</td>
+                                            <td>{{ $dt->NIM}}</td>
+                                            <td>{{ $dt->name }}</td>
+                                            <td>{{ $dt->email }}</td>
+                                            <td>{{ $dt->phone }}</td>
+                                            <td>{{ $dt->departement }}</td>
                                             <td>
-                                                <a href="{{ route('getDataByIdAttendance', $dt->id) }}"
+                                                <a href="{{ route('getDataByIdStudents', $dt->id) }}"
                                                     class="btn btn-primary">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a>
-                                                <form action="{{ route('deleteDataAttendance', $dt->id) }}"
+                                                <form action="{{ route('deleteDataStudents', $dt->id) }}"
                                                     method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')

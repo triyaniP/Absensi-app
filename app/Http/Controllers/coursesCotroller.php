@@ -67,7 +67,7 @@ class coursesCotroller extends Controller
     {
         // Mengambil data pegawai berdasarkan ID
         $data = coursesModel::where('id', $id)->first();
-        // Menghapus data pegawai dari database
+        
         $data->delete();
         // Setelah penghapusan, redirect ke halaman yang menampilkan semua data pegawai
         return redirect()->route('getAllDataCourse');

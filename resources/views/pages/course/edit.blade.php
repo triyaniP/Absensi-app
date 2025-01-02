@@ -18,22 +18,22 @@
                             <div class="form-group">
                                 <label for="course_code">Kode Mata Kuliah</label>
                                 <input type="text" class="form-control" id="course_code" name="course_code"
-                                    placeholder="Masukkan Kode Mata Kuliah" required>
+                                    placeholder="Masukkan Kode Mata Kuliah" value="{{$data->course_code}}" required>
                             </div>
                             <div class="form-group">
                                 <label for="course_name">Nama Mata Kuliah</label>
                                 <input type="text" class="form-control" id="course_name" name="course_name"
-                                    placeholder="Masukkan nama mata kuliah" required>
+                                    placeholder="Masukkan nama mata kuliah" value="{{$data->course_name}}" required>
                             </div>
                             <div class="form-group">
                                 <label for="lecturer_name">Nama Dosen</label>
                                 <input type="text" class="form-control" id="lecturer_name" name="lecturer_name"
-                                    placeholder="Masukkan nama dosen" required>
+                                    placeholder="Masukkan nama dosen" value="{{$data->lecturer_name}}" required>
                             </div>
                             <div class="form-group">
                                 <label for="semester">Semester</label>
                                 <input type="text" class="form-control" id="semester" name="semester"
-                                    placeholder="Masukkan semester" required>
+                                    placeholder="Masukkan semester" value="{{$data->semester}}" required>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Simpan</button>

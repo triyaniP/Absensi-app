@@ -13,8 +13,8 @@ class attendanceModel extends Model
     protected $table = 'tb_attendance';
     protected $fillable = [
         'id',
-        'date',
-        'time',
+        'date_attendance',
+        'time_attendance',
         'status',
         'courses_id',
         'students_id',
@@ -27,12 +27,14 @@ class attendanceModel extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function courses(): BelongsTo
+    public function students()
     {
-        return $this->belongsTo(coursesModel::class, 'courses_id', 'id');
+        return $this->belongsTo(studentsModel::class, 'students_id')->withDefault();
     }
-    public function students(): BelongsTo
+    
+    public function courses()
     {
-        return $this->belongsTo(studentsModel::class, 'students_id', 'id');
+        return $this->belongsTo(coursesModel::class, 'courses_id')->withDefault();
     }
+    
 }

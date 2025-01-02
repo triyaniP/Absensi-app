@@ -2,7 +2,7 @@
 @section('style')
 
 @endsection
-@section('content')
+@section('contents')
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -16,38 +16,34 @@
                         <form action="{{ route('createDataAttendance') }}" method="POST">
                             @csrf
                             <div class="form-group">
-                                <label for="date">Tanggal</label>
-                                <input type="date" class="form-control" id="date" name="date"
-                                    placeholder="Masukkan Tanggal" required>
+                                <label for="date_attendance">Tanggal Kehadiran</label>
+                                <input type="date" name="date_attendance" id="date_attendance" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label for="time">NIM</label>
-                                <input type="datetime" class="form-control" id="time" name="time"
-                                    placeholder="Masukkan waktu" required>
+                                <label for="time_attendance">Waktu Kehadiran</label>
+                                <input type="time" name="time_attendance" id="time_attendance" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label for="courses_id">NIM</label>
-                                <input type="text" class="form-control" id="courses_id" name="courses_id"
-                                    placeholder="Masukkan waktu" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="students_id">NIM</label>
-                                <input type="text" class="form-control" id="students_id" name="students_id"
-                                    placeholder="Masukkan waktu" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="status">status</label>
-                                <select class="form-control" id="status" name="status" required>
-                                    <option value=""></option>
-                                    <option value="present">Hadir</option>
-                                    <option value="absent">Tidak Hadir</option>
-                                    <option value="late">Lambat</option>
-                                    <option value="out of range">tidak dalam jangkauan</option>
+                                <label for="courses_id">Pilih mata kuliah</label>
+                                <select name="courses_id" id="courses_id" class="form-control" required>
+                                    <option value="" selected disabled hidden>Choose here</option>
+                                    @foreach($courses as $course)
+                                        <option value="{{ $course->id }}" {{ old('courses_id') == $course->id ? 'selected' : '' }}>{{ $course->course_name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="students_id">Pilih mahasiswa</label>
+                                <select name="students_id" id="students_id" class="form-control" required>
+                                    <option value="" selected disabled hidden>Choose here</option>
+                                    @foreach($students as $student)
+                                        <option value="{{ $student->id }}" {{ old('students_id') == $student->id ? 'selected' : '' }}>{{ $student->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>  
 
                             <button type="submit" class="btn btn-primary">Simpan</button>
-                            <a href="{{ route('getalldatamahasiswa') }}" class="btn btn-secondary">Batal</a>
+                            <a href="{{ route('getAllDataAttendance') }}" class="btn btn-secondary">Batal</a>
                         </form>
                     </div>
                     <!-- /.card-body -->
