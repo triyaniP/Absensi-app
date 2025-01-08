@@ -18,10 +18,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/absensi', function () {
+    return view('absensi.form');
+});
+
 Route::get('login', [AuthController::class, 'index'])->name('index');
 Route::post('login', [AuthController::class, 'login'])->name('login');
 
-Route::middleware(['auth'])->group(function() { 
+Route::middleware(['auth'])->group(function() {
     Route::get('/', function () {
         return view('admin.dashboard');
     });
@@ -36,7 +40,8 @@ Route::middleware(['auth'])->group(function() {
             Route::delete('/delete/{id}', 'deleteData')->name('deleteDataAttendance');
             Route::post('/attendance/{id}', 'attendance')->name('Attendance');
             Route::get('/attendance', 'showAttendance')->name('attendanceform');
-    
+            Route::post('/absensi/{id}', 'absensi')->name('absensi');
+
         });
         Route::prefix('courses')->controller(coursesCotroller::class)->group(function (){
             Route::get('/', 'index')->name('getAllDataCourse');

@@ -9,16 +9,16 @@ class coursesCotroller extends Controller
 {
     public function index()
     {
-        // Mengambil semua data dari model PegawaiModel
+        // Mengambil semua data dari model courseModel
         $data = coursesModel::all();
-        // Mengirimkan data ke view 'Pegawai.Index' dengan variabel 'data'
+        // Mengirimkan data ke view 'course.Index' dengan variabel 'data'
         return view('pages.course.course')->with('data', $data);
     }
 
-    // Fungsi untuk membuat atau menyimpan data pegawai baru
+    // Fungsi untuk membuat atau menyimpan data course baru
     public function createData(Request $request)
     {
-        // Membuat instance baru dari model PegawaiModel
+        // Membuat instance baru dari model courseModel
         $data = new coursesModel();
         // Mengambil nilai dari input form dan mengisi kolom pada model
         $data->course_code = $request->input('course_code');
@@ -27,7 +27,7 @@ class coursesCotroller extends Controller
         $data->semester = $request->input('semester');
         // Menyimpan data ke dalam database
         $data->save();
-        // Setelah menyimpan, redirect ke route yang menampilkan semua data pegawai
+        // Setelah menyimpan, redirect ke route yang menampilkan semua data course
         return redirect()->route('getAllDataCourse');
     }
 
@@ -37,19 +37,19 @@ class coursesCotroller extends Controller
     }
 
 
-    // Fungsi untuk mendapatkan data pegawai berdasarkan ID untuk keperluan edit
+    // Fungsi untuk mendapatkan data course berdasarkan ID untuk keperluan edit
     public function getDataById($id)
     {
-        // Mengambil satu data pegawai berdasarkan ID
+        // Mengambil satu data course berdasarkan ID
         $data = coursesModel::where('id', $id)->first();
-        // Mengirimkan data ke view 'Pegawai.edit' untuk ditampilkan di form edit
+        // Mengirimkan data ke view 'course.edit' untuk ditampilkan di form edit
         return view('pages.course.edit')->with('data', $data);
     }
 
-    // Fungsi untuk mengupdate data pegawai berdasarkan ID
+    // Fungsi untuk mengupdate data course berdasarkan ID
     public function updateData(Request $request, $id)
     {
-        // Mengambil data pegawai berdasarkan ID
+        // Mengambil data course berdasarkan ID
         $data = coursesModel::where('id', $id)->first();
         // Mengambil inputan baru dari form dan mengupdate data pada model
         $data->course_code = $request->input('course_code');
@@ -58,18 +58,18 @@ class coursesCotroller extends Controller
         $data->semester = $request->input('semester');
         // Menyimpan perubahan data ke dalam database
         $data->save();
-        // Setelah data berhasil diupdate, redirect ke halaman yang menampilkan semua data pegawai
+        // Setelah data berhasil diupdate, redirect ke halaman yang menampilkan semua data course
         return redirect()->route('getAllDataCourse');
     }
 
-    // Fungsi untuk menghapus data pegawai berdasarkan ID
+    // Fungsi untuk menghapus data course berdasarkan ID
     public function deleteData($id)
     {
-        // Mengambil data pegawai berdasarkan ID
+        // Mengambil data course berdasarkan ID
         $data = coursesModel::where('id', $id)->first();
-        
+
         $data->delete();
-        // Setelah penghapusan, redirect ke halaman yang menampilkan semua data pegawai
+        // Setelah penghapusan, redirect ke halaman yang menampilkan semua data course
         return redirect()->route('getAllDataCourse');
     }
 
