@@ -11,10 +11,6 @@
 <div class="wrapper">
 
   <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="{{asset ('assets')}}/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-</div>
-
     <!-- Navbar -->
     @include('layout.navbar')
     <!-- /.navbar -->
@@ -30,7 +26,7 @@
                     <div class="col-sm-6">
                       <h1 class="m-0">Dashboard</h1>
                     </div><!-- /.col --
-                </div><!-- /.row -->
+                </div><!- /.row -->
             </div><!-- /.container-fluid -->
             @yield('contents')
         </div>
@@ -53,5 +49,6 @@
 <!-- jQuery -->
 @include('layout.script')
 @yield('script')
+@include('sweetalert::alert')
 </body>
 </html>

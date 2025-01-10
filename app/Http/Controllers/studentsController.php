@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\studentsModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class studentsController extends Controller
 {
@@ -18,6 +20,21 @@ class studentsController extends Controller
     // Fungsi untuk membuat atau menyimpan data students baru
     public function createData(Request $request)
     {
+        $validation = Validator::make(
+            $request->all(),
+            [
+                'NIM' => 'required|numeric',
+                'name' => 'required',
+                'email' => 'required',
+                'phone' => 'required|numeric',
+                'departement' => 'required',
+            ]
+        );
+        if($validation->fails()){
+            $message = $validation->errors()->all();
+            Alert::error('gagal', $message);
+            return back();
+        }
         // Membuat instance baru dari model studentsModel
         $data = new studentsModel();
         // Mengambil nilai dari input form dan mengisi kolom pada model
@@ -29,7 +46,13 @@ class studentsController extends Controller
         // Menyimpan data ke dalam database
         $data->save();
         // Setelah menyimpan, redirect ke route yang menampilkan semua data students
-        return redirect()->route('getAllDataStudents');
+        if ($data){
+            Alert::success('create data successfully');
+            return redirect()->route('getAllDataStudents');;
+        }else{
+            Alert::error('failed to create data');
+            return back();
+        }
     }
 
     public function createForm()
@@ -50,6 +73,21 @@ class studentsController extends Controller
     // Fungsi untuk mengupdate data students berdasarkan ID
     public function updateData(Request $request, $id)
     {
+        $validation = Validator::make(
+            $request->all(),
+            [
+                'NIM' => 'required|numeric',
+                'name' => 'required',
+                'email' => 'required',
+                'phone' => 'required|numeric',
+                'departement' => 'required',
+            ]
+        );
+        if($validation->fails()){
+            $message = $validation->errors()->all();
+            Alert::error('gagal', $message);
+            return back();
+        }
         // Mengambil data students berdasarkan ID
         $data = studentsModel::where('id', $id)->first();
         // Mengambil inputan baru dari form dan mengupdate data pada model
@@ -60,8 +98,14 @@ class studentsController extends Controller
         $data->departement = $request->input('departement');
         // Menyimpan perubahan data ke dalam database
         $data->save();
+        if ($data){
+            Alert::success('create data successfully');
+            return redirect()->route('getAllDataStudents');
+        }else{
+            Alert::error('failed to create data');
+            return back();
+        }
         // Setelah data berhasil diupdate, redirect ke halaman yang menampilkan semua data students
-        return redirect()->route('getAllDataStudents');
     }
 
     // Fungsi untuk menghapus data students berdasarkan ID
@@ -72,7 +116,8 @@ class studentsController extends Controller
         // Menghapus data students dari database
         $data->delete();
         // Setelah penghapusan, redirect ke halaman yang menampilkan semua data students
-        return redirect()->route('getDataAllStudents');
+        Alert::success('delete data successfully');
+        return redirect()->route('getAllDataStudents');
     }
 
 }

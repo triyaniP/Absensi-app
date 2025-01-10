@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\coursesModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class coursesCotroller extends Controller
 {
@@ -18,6 +20,20 @@ class coursesCotroller extends Controller
     // Fungsi untuk membuat atau menyimpan data course baru
     public function createData(Request $request)
     {
+        $validation = Validator::make(
+            $request->all(),
+            [
+                'course_code' => 'required|numeric',
+                'course_name' => 'required',
+                'lecturer_name' => 'required',
+                'semester' => 'required|numeric',
+            ]
+        );
+        if($validation->fails()){
+            $message = $validation->errors()->all();
+            Alert::error('gagal', $message);
+            return back();
+        }
         // Membuat instance baru dari model courseModel
         $data = new coursesModel();
         // Mengambil nilai dari input form dan mengisi kolom pada model
@@ -28,7 +44,13 @@ class coursesCotroller extends Controller
         // Menyimpan data ke dalam database
         $data->save();
         // Setelah menyimpan, redirect ke route yang menampilkan semua data course
-        return redirect()->route('getAllDataCourse');
+        if ($data){
+            Alert::success('create data successfully');
+            return redirect()->route('getAllDataCourse');;
+        }else{
+            Alert::error('failed to create data');
+            return back();
+        }
     }
 
     public function createForm()
@@ -49,6 +71,20 @@ class coursesCotroller extends Controller
     // Fungsi untuk mengupdate data course berdasarkan ID
     public function updateData(Request $request, $id)
     {
+        $validation = Validator::make(
+            $request->all(),
+            [
+                'course_code' => 'required|numeric',
+                'course_name' => 'required',
+                'lecturer_name' => 'required',
+                'semester' => 'required|numeric',
+            ]
+        );
+        if($validation->fails()){
+            $message = $validation->errors()->all();
+            Alert::error('gagal', $message);
+            return back();
+        }
         // Mengambil data course berdasarkan ID
         $data = coursesModel::where('id', $id)->first();
         // Mengambil inputan baru dari form dan mengupdate data pada model
@@ -59,7 +95,13 @@ class coursesCotroller extends Controller
         // Menyimpan perubahan data ke dalam database
         $data->save();
         // Setelah data berhasil diupdate, redirect ke halaman yang menampilkan semua data course
-        return redirect()->route('getAllDataCourse');
+        if ($data){
+            Alert::success('create data successfully');
+            return redirect()->route('getAllDataCourse');;
+        }else{
+            Alert::error('failed to create data');
+            return back();
+        }
     }
 
     // Fungsi untuk menghapus data course berdasarkan ID
@@ -70,6 +112,7 @@ class coursesCotroller extends Controller
 
         $data->delete();
         // Setelah penghapusan, redirect ke halaman yang menampilkan semua data course
+        Alert::success('delete data successfully');
         return redirect()->route('getAllDataCourse');
     }
 

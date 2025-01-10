@@ -50,6 +50,7 @@
     </div>
     <!-- /.container-fluid -->
 </section>
+@include('sweetalert::alert')
 @endsection
 @section('script')
 

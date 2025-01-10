@@ -8,6 +8,8 @@ use App\Models\studentsModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class attendanceController extends Controller
 {
@@ -29,6 +31,18 @@ class attendanceController extends Controller
     // Fungsi untuk membuat atau menyimpan data attandance baru
     public function createData(Request $request)
     {
+        $validation = Validator::make(
+            $request->all(),
+            [
+                'date_attendance' => 'required',
+                'time_attendance' => 'required',
+            ]
+        );
+        if($validation->fails()){
+            $message = $validation->errors()->all();
+            Alert::error('gagal', $message);
+            return back();
+        }
         // Membuat instance baru dari model attandanceModel
         $data = new attendanceModel();
         // Mengambil nilai dari input form dan mengisi kolom pada model
@@ -40,7 +54,9 @@ class attendanceController extends Controller
         // Menyimpan data ke dalam database
         $data->save();
         // Setelah menyimpan, redirect ke route yang menampilkan semua data attandance
+        Alert::success('success', 'sukses create Data');
         return redirect()->route('getAllDataAttendance');
+
     }
 
     // Fungsi untuk mendapatkan data attandance berdasarkan ID untuk keperluan edit
@@ -57,6 +73,18 @@ class attendanceController extends Controller
     // Fungsi untuk mengupdate data absen berdasarkan ID
     public function updateData(Request $request, $id)
     {
+        $validation = Validator::make(
+            $request->all(),
+            [
+                'date_attendance' => 'required',
+                'time_attendance' => 'required',
+            ]
+        );
+        if($validation->fails()){
+            $message = $validation->errors()->all();
+            Alert::error('gagal', $message);
+            return back();
+        }
         // Mengambil data attandance berdasarkan ID
         $data = attendanceModel::where('id', $id)->first();
         // Mengambil inputan baru dari form dan mengupdate data pada model
@@ -68,6 +96,7 @@ class attendanceController extends Controller
         // Menyimpan perubahan data ke dalam database
         $data->save();
         // Setelah data berhasil diupdate, redirect ke halaman yang menampilkan semua data absen
+        Alert::success('success', 'sukses update Data');
         return redirect()->route('getAllDataAttendance');
     }
 
@@ -75,6 +104,7 @@ class attendanceController extends Controller
     {
         $data = attendanceModel::where('id', $id)->first();
         $data->delete();
+        Alert::success('delete data successfully');
         return redirect()->route('getAllDataAttendance');
     }
 

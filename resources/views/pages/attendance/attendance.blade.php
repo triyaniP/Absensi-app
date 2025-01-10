@@ -50,8 +50,8 @@
                                                     method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger"
-                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                                    <button type="submit" class="btn btn-danger" 
+                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </form>

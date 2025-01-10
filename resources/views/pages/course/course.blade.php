@@ -49,7 +49,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger"
-                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </form>
@@ -74,6 +74,7 @@
     </div>
     <!-- /.container-fluid -->
 </section>
+@include('sweetalert::alert')
 @endsection
 @section('script')
 
